@@ -1,0 +1,67 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "Secure";
+}
+
+<h2 style="color:blue;">Secure Page</h2>
+<p>
+    <pre style="color:green">Congratulations! If you can see this page, you hav successfully authenticated to Active Directory using a gMSA!</pre>
+</p>
+<br />
+<div>
+    <style>
+        table {
+            font-family: 'Courier New', sans-serif;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #010b13;
+            text-align: left;
+            padding: 8px;
+        }
+    </style>
+    <h3>User information</h3>
+    <table style="width:auto">
+        <tr>
+            <th style="text-align:center; background-color:dodgerblue; color:white"><strong>Environment Variable</strong></th>
+            <th style="text-align:center; background-color:dodgerblue; color:white"><strong>System Value</strong></th>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>@User.Identity.Name</td>
+        </tr>
+        <tr>
+            <td>Authentication Type</td>
+            <td>@User.Identity.AuthenticationType</td>
+        </tr>
+    </table>
+    <br />
+    <h3>Groups</h3>
+    <ul style="font-family:'Courier New'">
+        @foreach (var groupName in Model)
+        {
+            <li>@groupName</li>
+        }
+    </ul>
+    <br />
+    <h3>User Claims</h3>
+    <ul style="font-family:'Courier New'">
+        @foreach (var claim in (User.Identity as System.Security.Principal.WindowsIdentity).Claims)
+        {
+            <li>@claim.ToString()</li>
+        }
+    </ul>
+</div>
+
+<!--
+@section Scripts {
+    <script type="text/javascript" defer>
+        $("#userNameTextBox").val(unescape("@User.Identity.Name"));
+        $("#authTypeTextBox").val("@User.Identity.AuthenticationType");
+    </script>
+} -->
+
+
+
+
