@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1909
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1909 as builder
 COPY . /temp/
 WORKDIR /temp
 RUN nuget restore
@@ -11,4 +11,4 @@ RUN powershell.exe -NoProfile -Command \
   Set-WebConfigurationProperty -filter /system.webServer/security/authentication/windowsAuthentication -PSPath IIS:\ -name enabled -value true
 
 # Copy application
-COPY --from=0 /output/ /inetpub/wwwroot
+COPY --from=builder /output/ /inetpub/wwwroot
